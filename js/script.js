@@ -1,86 +1,200 @@
 // event listener to respond to "Show another quote" button clicks
-// when user clicks anywhere on the button, the "change" function is called
-document.getElementById('loadQuote').addEventListener("click", change, false);
+// when user clicks anywhere on the button, the "printQuote" function is called
+// call the function every 20 seconds
+document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+let intervalID = setInterval(printQuote, 20000);
 
-function change () {
-  printQuote ();
-  changeBackground ()
-}
+// toggle class "selected" when clicking on filter button
+const filterButtons = document.getElementsByClassName('filter');
+for (let i=0; i<filterButtons.length; i++) {
+  filterButtons[i].addEventListener("click", function () {
+    // if already selected: remove class
+    if (filterButtons[i].classList.contains('selected')) {
+      filterButtons[i].classList.remove("selected")
+    }
+    // if not already selected
+    else {
+      // remove class from other buttons
+      for (let i=0; i<filterButtons.length; i++) {
+        filterButtons[i].classList.remove("selected");
+      }
+      // add class to clicked button
+      filterButtons[i].classList.add("selected");
+    }
+  })}
 
-const quotes = [{
-  quote: "Be the change that you wish to see in the world",
-  source: "Mahatma Gandhi",
-  tags: "Wisdom"
-  },{
-  quote: "Everything you can imagine is real.",
-  source: "Pablo Picasso",
-  tags: "Inspirational"
-  },{
-  quote: "Life isn't about finding yourself. Life is about creating yourself.",
-  source: "George Bernard Shaw",
-  tags: "Inspirational"
-  },{
-  quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-  source: "Winston S. Churchill",
-  tags: "Motivational"
-  },{
-  quote: "We are addicted to our thoughts. We cannot change anything if we cannot change our thinking.",
-  source: "Santosh Kalwar",
-  tags: "Wisdom"
-  },{
-  quote: "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.",
-  source: "Isaac Asimov",
-  tags: "Science"
-  },{
-  quote: "No one can grow if he does not accept his smallness.",
-  source: "Pope Francis",
-  tags: "Life"
-  },{
-  quote: "Whatever the cost of our libraries, the price is cheap compared to that of an ignorant nation.",
-  source: "Walter Cronkite",
-  tags: "Education"
-  },{
-  quote: "The past has no power over the present moment.",
-  source: "Eckhart Tolle",
-  tags: "Wisdom"
-  },{
-  quote: "If you want others to be happy, practice compassion. If you want to be happy, practice compassion.",
-  source: "Dalai Lama",
-  tags: "Love"
-  },{
-  quote: "Your up and down emotions are like clouds in the sky, beyond them, the real, basic human nature is clear and pure.",
-  source: "Lama Zopa Rinpoche",
-  tags: "Happiness"
-  }
-]
-
-// Create function that returns a random quote quote object
-
+// create function that returns a random quote object
 function getRandomQuote () {
-  const randomNum = Math.floor(Math.random() * 11);
-  return quotes[randomNum];
+  // return only Motivational quotes if selected
+  if (filterButtons[0].classList.contains('selected')) {
+    const randomNum = Math.floor(Math.random() * 10);
+    const wisdomArray = quotes.filter(function (el) {
+      return (el.tags === "Wisdom");
+    });
+    return wisdomArray[randomNum];
+  }
+  // return only Wisdom quotes if selected
+  else if (filterButtons[1].classList.contains('selected')) {
+    const randomNum = Math.floor(Math.random() * 10);
+    const motivationalArray = quotes.filter(function (el) {
+      return (el.tags === "Motivational");
+    });
+    return motivationalArray[randomNum];
+  }
+  // return only Humor quotes if selected
+  else if (filterButtons[2].classList.contains('selected')) {
+    const randomNum = Math.floor(Math.random() * 10);
+    const humorArray = quotes.filter(function (el) {
+      return (el.tags === "Humor");
+    });
+    return humorArray[randomNum];
+  }
+  // return any quote if not selected
+  else {
+    const randomNum = Math.floor(Math.random() * 30);
+    return quotes[randomNum]
+  }
 }
 
-// Print quote and source to the page
-
+// create "printQuote" function
 function printQuote () {
+  // print quote and source to the page
   const quoteObject = getRandomQuote();
   const paragraph = `
   <p class="quote"> ${quoteObject.quote} </p>
   <p class="source">  ${quoteObject.source} </p>
   `;
   document.getElementById('quote-box').innerHTML = paragraph;
+  // set random background
+  const red = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  document.getElementsByTagName('body')[0].style.backgroundColor = `rgb(${red},${green},${blue})`;
+  // reset timer
+  clearInterval(intervalID);
+  intervalID = setInterval(printQuote, 20000);
 }
 
-// Set random background when quote changes
-
-function changeBackground () {
-const red = Math.floor(Math.random() * 256);
-const green = Math.floor(Math.random() * 256);
-const blue = Math.floor(Math.random() * 256);
-document.getElementsByTagName('body')[0].style.backgroundColor = `rgb(${red},${green},${blue})`;
-}
-
- // Change on delay
-
- var intervalID = window.setInterval(change, 8000);
+// define 'quotes' - array of objects
+const quotes = [{
+  quote: "A day without sunshine is like, you know, night.",
+  source: "Steve Martin",
+  tags: "Humor"
+  },{
+  quote: "My fake plants died because I did not pretend to water them.",
+  source: "Mitch Hedberg",
+  tags: "Humor"
+  },{
+  quote: "Everything is funny, as long as it's happening to somebody else.",
+  source: "Will Rogers",
+  tags: "Humor"
+  },{
+  quote: "I'm sorry, if you were right, I'd agree with you.",
+  source: "Robin Williams",
+  tags: "Humor"
+  },{
+  quote: "I can resist everything except temptation.",
+  source: "Oscar Wilde",
+  tags: "Humor"
+  },{
+  quote: "Between two evils, I always pick the one I never tried before.",
+  source: "Mae West",
+  tags: "Humor"
+  },{
+  quote: "I like long walks, especially when they are taken by people who annoy me.",
+  source: "Fred Allen",
+  tags: "Humor"
+  },{
+  quote: "I knew I was an unwanted baby when I saw that my bath toys were a toaster and a radio.",
+  source: "Joan Rivers",
+  tags: "Humor"
+  },{
+  quote: "You can lead a man to Congress, but you can't make him think.",
+  source: "Milton Berle",
+  tags: "Humor"
+  },{
+  quote: "I distrust camels, and anyone else who can go a week without a drink.",
+  source: "Joe E. Lewis",
+  tags: "Humor"
+  },{
+  quote: "We are addicted to our thoughts. We cannot change anything if we cannot change our thinking.",
+  source: "Santosh Kalwar",
+  tags: "Wisdom"
+  },{
+  quote: "The past has no power over the present moment.",
+  source: "Eckhart Tolle",
+  tags: "Wisdom"
+  },{
+  quote: "There is nothing either good or bad, but thinking makes it so.",
+  source: "William Shakespeare",
+  tags: "Wisdom"
+  },{
+  quote: "Your up and down emotions are like clouds in the sky, beyond them, the real, basic human nature is clear and pure.",
+  source: "Lama Zopa Rinpoche",
+  tags: "Wisdom"
+  },{
+  quote: "Life isn't about finding yourself. Life is about creating yourself.",
+  source: "George Bernard Shaw",
+  tags: "Wisdom"
+  },{
+  quote: "The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.",
+  source: "Isaac Asimov",
+  tags: "Wisdom"
+  },{
+  quote: "Whatever the cost of our libraries, the price is cheap compared to that of an ignorant nation.",
+  source: "Walter Cronkite",
+  tags: "Wisdom"
+  },{
+  quote: "Everything you can imagine is real.",
+  source: "Pablo Picasso",
+  tags: "Wisdom"
+  },{
+  quote: "If you want others to be happy, practice compassion. If you want to be happy, practice compassion.",
+  source: "Dalai Lama",
+  tags: "Wisdom"
+  },{
+  quote: "Science is organized knowledge. Wisdom is organized life.",
+  source: "Immanuel Kant",
+  tags: "Wisdom"
+  },{
+  quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+  source: "Winston S. Churchill",
+  tags: "Motivational"
+  },{
+  quote: "Life is 10% what happens to you and 90% how you react to it.",
+  source: "Charles R. Swindoll",
+  tags: "Motivational"
+  },{
+  quote: "Setting goals is the first step in turning the invisible into the visible.",
+  source: "Tony Robbins ",
+  tags: "Motivational"
+  },{
+  quote: "Problems are not stop signs, they are guidelines.",
+  source: "Robert H. Schuller",
+  tags: "Motivational"
+  },{
+  quote: "You are never too old to set another goal or to dream a new dream.",
+  source: "Les Brown",
+  tags: "Motivational"
+  },{
+  quote: "Do you want to know who you are? Don't ask. Act! Action will delineate and define you.",
+  source: "Thomas Jefferson",
+  tags: "Motivational"
+  },{
+  quote: "I'd rather attempt to do something great and fail than to attempt to do nothing and succeed.",
+  source: "Robert H. Schuller",
+  tags: "Motivational"
+  },{
+  quote: "Put your heart, mind, and soul into even your smallest acts. This is the secret of success.",
+  source: "Swami Sivananda",
+  tags: "Motivational"
+  },{
+  quote: "Success is a journey, not a destination. The doing is often more important than the outcome.",
+  source: "Arthur Ashe",
+  tags: "Motivational"
+  },{
+  quote: "Quality is not an act, it is a habit.",
+  source: "Aristotle",
+  tags: "Motivational"
+  }
+]

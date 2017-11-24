@@ -1,5 +1,4 @@
 body {
-  /*text-align: center;*/
   background-color: #36b55c;
   color: white;
   font-family: 'Playfair Display', serif;
@@ -45,18 +44,6 @@ body {
 .source:before {
   content: "—";
 }
-.citation {
-  font-style: italic;
-}
-.citation:before {
-  content: ", ";
-  font-style: normal;
-}
-.year:before {
-  content: ", ";
-  font-style: normal;
-}
-
 #loadQuote {
   position: fixed;
   width: 12em;
@@ -77,6 +64,39 @@ body {
 #loadQuote:focus {
   outline: none;
 }
+#filterBox {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 90px;
+}
+.filter {
+  width: 9em;
+  border-radius: 0px;
+  border: 2px solid #fff;
+  color: #fff;
+  background-color: inherit;
+  padding: 8px 0;
+  transition: .3s ease-out;
+  font-size: 0.7em;
+}
+.filter:nth-child(1) {
+  border-radius: 4px 0 0 4px;
+}
+.filter:nth-child(2) {
+  border-right: none;
+  border-left: none;
+}
+.filter:nth-child(3) {
+  border-radius: 0 4px 4px 0;
+}
+.filter:focus {
+  outline: none;
+}
+.selected {
+  background-color: rgba(255,255,255,.2)
+}
 
 @media (max-width: 420px) {
   .quote {
@@ -84,6 +104,17 @@ body {
   }
   .quote:before, .quote:after {
     font-size: 3rem;
+  }
+  .source {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 420px) and (max-width: 1000px) {
+  .quote {
+    font-size: 3rem;
+  }
+  .quote:before, .quote:after {
+    font-size: 4rem;
   }
   .source {
     font-size: 1rem;
