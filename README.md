@@ -1,1 +1,1 @@
-# Techdegree Project 1
+# JS-Project-1---Random-Quote-Generator
