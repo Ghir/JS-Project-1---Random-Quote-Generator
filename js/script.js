@@ -1,32 +1,25 @@
 
-// event listener to respond to "Show another quote" button clicks
-// when user clicks anywhere on the button, the "printQuote" function is called
-// call the function every 20 seconds
+// print a new quote on button click and every 10 seconds
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
-let intervalID = setInterval(printQuote, 20000);
+let intervalID = setInterval(printQuote, 10000);
 
-// toggle class "selected" when clicking on filter button
+// toggle class selected on  filter buttons
 const filterButtons = document.getElementsByClassName('filter');
 for (let i=0; i<filterButtons.length; i++) {
   filterButtons[i].addEventListener("click", function () {
-    // if already selected: remove class
     if (filterButtons[i].classList.contains('selected')) {
       filterButtons[i].classList.remove("selected")
     }
-    // if not already selected
     else {
-      // remove class from other buttons
       for (let i=0; i<filterButtons.length; i++) {
         filterButtons[i].classList.remove("selected");
       }
-      // add class to clicked button
       filterButtons[i].classList.add("selected");
     }
   })}
 
-// create function that returns a random quote object
 function getRandomQuote () {
-  // return only Wisdom quotes if selected
+  // return only Wisdom quotes
   if (filterButtons[0].classList.contains('selected')) {
     const randomNum = Math.floor(Math.random() * 10);
     const wisdomArray = quotes.filter(function (el) {
@@ -34,7 +27,7 @@ function getRandomQuote () {
     });
     return wisdomArray[randomNum];
   }
-  // return only Motivational quotes if selected
+  // return only Motivational quotes
   else if (filterButtons[1].classList.contains('selected')) {
     const randomNum = Math.floor(Math.random() * 10);
     const motivationalArray = quotes.filter(function (el) {
@@ -42,7 +35,7 @@ function getRandomQuote () {
     });
     return motivationalArray[randomNum];
   }
-  // return only Humor quotes if selected
+  // return only Humor quotes
   else if (filterButtons[2].classList.contains('selected')) {
     const randomNum = Math.floor(Math.random() * 10);
     const humorArray = quotes.filter(function (el) {
@@ -50,16 +43,14 @@ function getRandomQuote () {
     });
     return humorArray[randomNum];
   }
-  // return any quote if not selected
+  // return any quote
   else {
     const randomNum = Math.floor(Math.random() * 30);
     return quotes[randomNum]
   }
 }
 
-// create "printQuote" function
 function printQuote () {
-  // print quote and source to the page
   const quoteObject = getRandomQuote();
   const paragraph = `
   <p class="quote"> ${quoteObject.quote} </p>
@@ -71,7 +62,6 @@ function printQuote () {
   const green = Math.floor(Math.random() * 256);
   const blue = Math.floor(Math.random() * 256);
   document.getElementsByTagName('body')[0].style.backgroundColor = `rgb(${red},${green},${blue})`;
-  // reset timer
   clearInterval(intervalID);
   intervalID = setInterval(printQuote, 20000);
 }
