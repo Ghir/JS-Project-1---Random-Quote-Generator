@@ -1,4 +1,3 @@
-
 // print a new quote on button click and every 10 seconds
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 let intervalID = setInterval(printQuote, 10000);
