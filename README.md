@@ -4,4 +4,4 @@ This simple app shows you random quotes filterable by category.
 &nbsp;
 &nbsp;
 
-![Screeshot](.quotes.png)
+![Screeshot](./quotes.png)
