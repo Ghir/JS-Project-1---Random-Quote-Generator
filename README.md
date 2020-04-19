@@ -1,6 +1,6 @@
-### Random Quote Generator
+## Random Quote Generator
 
-This was an exercise to learn Html, Css and JavaScript. Shows a page with random quotes and background colors, with buttons to select a category.
+This was an exercise to learn HTML, CSS and JavaScript. Shows a page with random quotes and background colors, with buttons to select a category.
 
 &nbsp;
 &nbsp;
